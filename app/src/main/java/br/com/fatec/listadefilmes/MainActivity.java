@@ -32,9 +32,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Passo 1: Atualizar o array;
-                filmes.add(editTextNomeFilme.getText().toString());
-                editTextNomeFilme.setText("");
-                atualizarListView();
+                String filme = editTextNomeFilme.getText().toString().trim();
+                if (!filme.isEmpty()) {
+                    filmes.add(filme);
+                    editTextNomeFilme.setText("");
+                    atualizarListView();
+                }
             }
         });
 
