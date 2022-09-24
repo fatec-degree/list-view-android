@@ -1,7 +1,9 @@
 package br.com.fatec.listadefilmes;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,9 +40,18 @@ public class MainActivity extends AppCompatActivity {
 
         this.listViewFilme.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long l) {
-                filmes.remove(posicao);
-                atualizarListView();
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int posicao, long l) {
+                AlertDialog.Builder msg = new AlertDialog.Builder(MainActivity.this);
+                msg.setMessage("Deseja realmente excluir o item?");
+                msg.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        filmes.remove(posicao);
+                        atualizarListView();
+                    }
+                });
+                msg.setNegativeButton("Não", null);
+                msg.show();
                 return false;
             }
         });
