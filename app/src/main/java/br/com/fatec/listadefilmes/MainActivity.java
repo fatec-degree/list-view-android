@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,17 +29,28 @@ public class MainActivity extends AppCompatActivity {
         this.buttonAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Passo 1: Adicionar itens ao array;
+                // Passo 1: Atualizar o array;
                 filmes.add(editTextNomeFilme.getText().toString());
                 editTextNomeFilme.setText("");
-
-                // Passo 2: Definir o Adapter
-                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, filmes);
-
-                // Passo 3: Associar o adapter ao ListView
-                listViewFilme.setAdapter(adapter);
+                atualizarListView();
             }
         });
+
+        this.listViewFilme.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicao, long l) {
+                filmes.remove(posicao);
+                atualizarListView();
+                return false;
+            }
+        });
+    }
+
+    private void atualizarListView() {
+        // Passo 2: Definir o Adapter
+        ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, filmes);
+        // Passo 3: Associar o adapter ao ListView
+        listViewFilme.setAdapter(adapter);
     }
 
     public void associaComponentes() {
