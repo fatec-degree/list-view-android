@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextNomeFilme;
     private ListView listViewFilme;
     private List<String> filmes = new ArrayList<>();
+    private TextView textViewMensagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     filmes.add(filme);
                     editTextNomeFilme.setText("");
                     atualizarListView();
+                    textViewMensagem.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -51,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         filmes.remove(posicao);
                         atualizarListView();
+                        if(filmes.isEmpty()) {
+                            textViewMensagem.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
                 msg.setNegativeButton("Não", null);
@@ -71,5 +77,6 @@ public class MainActivity extends AppCompatActivity {
         this.buttonAdicionar = findViewById(R.id.buttonAdicionar);
         this.editTextNomeFilme = findViewById(R.id.editTextNomeFilme);
         this.listViewFilme = findViewById(R.id.listViewFilme);
+        this.textViewMensagem = findViewById(R.id.textViewMensagem);
     }
 }
